@@ -48,17 +48,18 @@ public class WNIdSenseFetcherServlet extends HttpServlet {
 			String main_gross = synset.getMainGloss(Language.EN).toString();
 			List<String> wnids = Utils.objToString(synset.getWordNetOffsets());
 			List<String> categories = Utils.objToString(synset.getCategories(Language.EN));
-			List<String> grosses = Utils.objToString(synset.getGlosses(Language.EN));
+			List<String> glosses = Utils.objToString(synset.getGlosses(Language.EN));
 			List<String> examples = Utils.objToString(synset.getExamples(Language.EN));
 			List<SensePojo> senses = new ArrayList<SensePojo>();
 			for (BabelSense sense : synset.getSenses(Language.EN)) {
 				senses.add(new SensePojo(sense.toString(), sense.isKeySense(), sense.getPOS().toString(),
 						sense.getSensekey(), sense.getID()));
 			}
-			SynsetPojo pojo = new SynsetPojo(senses, grosses, bnid, wnids, main_sense, main_gross, categories, examples,
+			SynsetPojo pojo = new SynsetPojo(senses, glosses, bnid, wnids, main_sense, main_gross, categories, examples,
 					type, pos);
 			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 			resp.getWriter().println(ow.writeValueAsString(pojo));
+			return;
 		}
 		resp.getWriter().println("No word found!");
 

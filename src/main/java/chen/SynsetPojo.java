@@ -5,7 +5,7 @@ import chen.SensePojo;
 
 public class SynsetPojo {
 	List<SensePojo> senses;
-	List<String> grosses;
+	List<String> glosses;
 	String bnid;
 	List<String> wnids;
 	String main_sense;
@@ -19,7 +19,7 @@ public class SynsetPojo {
 			String main_gross, List<String> categories, List<String> examples, String type, String pOS) {
 		super();
 		this.senses = senses;
-		this.grosses = grosses;
+		this.glosses = grosses;
 		this.bnid = bnid;
 		this.wnids = wnids;
 		this.main_sense = main_sense;
@@ -38,12 +38,12 @@ public class SynsetPojo {
 		this.senses = senses;
 	}
 
-	public List<String> getGrosses() {
-		return grosses;
+	public List<String> getGlosses() {
+		return glosses;
 	}
 
-	public void setGrosses(List<String> grosses) {
-		this.grosses = grosses;
+	public void setGlosses(List<String> glosses) {
+		this.glosses = glosses;
 	}
 
 	public String getBnid() {
