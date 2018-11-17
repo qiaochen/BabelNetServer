@@ -31,77 +31,56 @@ import it.uniroma1.lcl.jlt.util.ScoredItem;
  * @see it.uniroma1.lcl.babelnet.test.BabelSenseTest
  * @see it.uniroma1.lcl.babelnet.test.BabelSynsetTest
  */
-public class BabelNetDemo
-{
+public class BabelNetDemo {
 	/**
 	 * A demo to see the senses of a word.
 	 *
-	 * @param lemma the input lemma
+	 * @param lemma            the input lemma
 	 * @param languageToSearch the language to search
 	 * @param languagesToPrint the languages used for printing
 	 */
-	public static void testDictionary(String lemma, Language languageToSearch,
-			  						  Language... languagesToPrint)
-	{
+	public static void testDictionary(String lemma, Language languageToSearch, Language... languagesToPrint) {
 		BabelNet bn = BabelNet.getInstance();
 		System.out.println("SENSES FOR \"" + lemma + "\"");
-		List<BabelSense> senses =
-			bn.getSensesFrom(lemma, languageToSearch, UniversalPOS.NOUN);
+		List<BabelSense> senses = bn.getSensesFrom(lemma, languageToSearch, UniversalPOS.NOUN);
 		Collections.sort(senses, new BabelSenseComparator());
 		for (BabelSense sense : senses)
-			System.out.println("\t=>"+sense.getSenseString());
+			System.out.println("\t=>" + sense.getSenseString());
 		System.out.println();
 		System.out.println("SYNSETS WITH \"" + lemma + "\"");
-		List<BabelSynset> synsets =
-			bn.getSynsets(lemma, languageToSearch, UniversalPOS.NOUN);
+		List<BabelSynset> synsets = bn.getSynsets(lemma, languageToSearch, UniversalPOS.NOUN);
 		Collections.sort(synsets, new BabelSynsetComparator(lemma));
 		for (BabelSynset synset : synsets)
-			System.out.println(
-					"\t=>(" +synset.getID() +
-					") TYPE: " + synset.getType() +
-					"; WN SYNSET: " + synset.getWordNetOffsets() +
-					"; MAIN SENSE: " + synset.getMainSense(Language.EN) +
-					"; SENSES: "+ synset.toString(languagesToPrint));
+			System.out.println("\t=>(" + synset.getID() + ") TYPE: " + synset.getType() + "; WN SYNSET: "
+					+ synset.getWordNetOffsets() + "; MAIN SENSE: " + synset.getMainSense(Language.EN) + "; SENSES: "
+					+ synset.toString(languagesToPrint));
 		System.out.println();
 	}
 
 	/**
 	 * A demo to see the senses of a word.
 	 *
-	 * @param lemma the input lemma
+	 * @param lemma            the input lemma
 	 * @param languageToSearch the language to search with
-	 * @param allowedSources the sources of the senses
+	 * @param allowedSources   the sources of the senses
 	 */
-	public static void testDictionary(String lemma, Language languageToSearch,
-			  						  BabelSenseSource... allowedSources)
-	{
+	public static void testDictionary(String lemma, Language languageToSearch, BabelSenseSource... allowedSources) {
 		BabelNet bn = BabelNet.getInstance();
 		System.out.println("SENSES FOR \"" + lemma + "\"");
-		List<BabelSense> senses =
-			bn.getSensesFrom(new BabelNetQuery.Builder(lemma)
-											.from(languageToSearch)
-											.POS(UniversalPOS.NOUN)
-											.sources(allowedSources)
-												.build());
+		List<BabelSense> senses = bn.getSensesFrom(new BabelNetQuery.Builder(lemma).from(languageToSearch)
+				.POS(UniversalPOS.NOUN).sources(allowedSources).build());
 		Collections.sort(senses, new BabelSenseComparator());
 		for (BabelSense sense : senses)
-			System.out.println("\t=>"+sense.getSenseString());
+			System.out.println("\t=>" + sense.getSenseString());
 		System.out.println();
 		System.out.println("SYNSETS WITH \"" + lemma + "\"");
-		List<BabelSynset> synsets =
-			bn.getSynsets(new BabelNetQuery.Builder(lemma)
-											.from(languageToSearch)
-											.POS(UniversalPOS.NOUN)
-											.sources(allowedSources)
-												.build());
+		List<BabelSynset> synsets = bn.getSynsets(new BabelNetQuery.Builder(lemma).from(languageToSearch)
+				.POS(UniversalPOS.NOUN).sources(allowedSources).build());
 		Collections.sort(synsets, new BabelSynsetComparator(lemma));
 		for (BabelSynset synset : synsets)
-			System.out.println(
-					"\t=>(" +synset.getID() +
-					") TYPE: " + synset.getType() +
-					"; WN SYNSET: " + synset.getWordNetOffsets() +
-					"; MAIN SENSE: " + synset.getMainSense(Language.EN) +
-					"; SENSES: "+ synset.toString());
+			System.out.println("\t=>(" + synset.getID() + ") TYPE: " + synset.getType() + "; WN SYNSET: "
+					+ synset.getWordNetOffsets() + "; MAIN SENSE: " + synset.getMainSense(Language.EN) + "; SENSES: "
+					+ synset.toString());
 		System.out.println();
 	}
 
@@ -111,24 +90,23 @@ public class BabelNetDemo
 	 * @param id the id of the synset to test
 	 * @throws InvalidSynsetIDException thrown when the id is invalid
 	 */
-	public static void testGraph(String id) throws InvalidSynsetIDException
-	{
+	public static void testGraph(String id) throws InvalidSynsetIDException {
 		testGraph(new BabelSynsetID(id));
 	}
 
 	/**
 	 * A demo to explore the BabelNet graph.
 	 *
-	 * @param lemma the lemma to work on
+	 * @param lemma    the lemma to work on
 	 * @param language the lemma language
 	 */
-	public static void testGraph(String lemma, Language language)
-	{
+	public static void testGraph(String lemma, Language language) {
 		BabelNet bn = BabelNet.getInstance();
 		List<BabelSynset> synsets = bn.getSynsets(lemma, language);
 		Collections.sort(synsets, new BabelSynsetComparator(lemma));
 
-		for (BabelSynset synset : synsets) testGraph(synset.getID());
+		for (BabelSynset synset : synsets)
+			testGraph(synset.getID());
 	}
 
 	/**
@@ -136,17 +114,15 @@ public class BabelNetDemo
 	 *
 	 * @param synsetId the synset ID to test
 	 */
-	public static void testGraph(BabelSynsetID synsetId)
-	{
+	public static void testGraph(BabelSynsetID synsetId) {
 		List<BabelSynsetRelation> successorsEdges = synsetId.getOutgoingEdges();
 
 		System.out.println("SYNSET ID:" + synsetId);
 		System.out.println("# OUTGOING EDGES: " + successorsEdges.size());
 
-		for (BabelSynsetRelation edge : successorsEdges)
-		{
+		for (BabelSynsetRelation edge : successorsEdges) {
 			System.out.println("\tEDGE " + edge);
-			System.out.println("\t" +  edge.getBabelSynsetIDTarget().toSynset().toString(Language.EN));
+			System.out.println("\t" + edge.getBabelSynsetIDTarget().toSynset().toString(Language.EN));
 			System.out.println();
 		}
 	}
@@ -154,22 +130,18 @@ public class BabelNetDemo
 	/**
 	 * A demo to see the translations of a word.
 	 *
-	 * @param lemma the lemma to work on
+	 * @param lemma            the lemma to work on
 	 * @param languageToSearch the search language
 	 * @param languagesToPrint the languages to use for printing
 	 */
-	public static void testTranslations(String lemma, Language languageToSearch,
-			  							Language... languagesToPrint)
-	{
+	public static void testTranslations(String lemma, Language languageToSearch, Language... languagesToPrint) {
 		List<Language> allowedLanguages = Arrays.asList(languagesToPrint);
-		Multimap<Language, ScoredItem<String>> translations =
-			BabelNetUtils.getTranslations(languageToSearch, lemma);
+		Multimap<Language, ScoredItem<String>> translations = BabelNetUtils.getTranslations(languageToSearch, lemma);
 
 		System.out.println("TRANSLATIONS FOR " + lemma);
-		for (Language language : translations.keySet())
-		{
+		for (Language language : translations.keySet()) {
 			if (allowedLanguages.contains(language))
-				System.out.println("\t"+language+"=>"+translations.get(language));
+				System.out.println("\t" + language + "=>" + translations.get(language));
 		}
 	}
 
@@ -179,8 +151,7 @@ public class BabelNetDemo
 	 * @param id the id of the synset to test
 	 * @throws InvalidSynsetIDException thrown when the id is invalid
 	 */
-	public static void testGloss(String id) throws InvalidSynsetIDException
-	{
+	public static void testGloss(String id) throws InvalidSynsetIDException {
 		BabelSynset synset = new BabelSynsetID(id).toSynset();
 		testGloss(synset);
 	}
@@ -189,14 +160,14 @@ public class BabelNetDemo
 	 *
 	 * A demo to see the glosses of a word in a certain language
 	 *
-	 * @param lemma the lemma to work on
+	 * @param lemma    the lemma to work on
 	 * @param language the lemma language
 	 */
-	public static void testGloss(String lemma, Language language)
-	{
+	public static void testGloss(String lemma, Language language) {
 		BabelNet bn = BabelNet.getInstance();
 		List<BabelSynset> synsets = bn.getSynsets(lemma, language);
-		for (BabelSynset synset : synsets) testGloss(synset);
+		for (BabelSynset synset : synsets)
+			testGloss(synset);
 	}
 
 	/**
@@ -204,16 +175,14 @@ public class BabelNetDemo
 	 *
 	 * @param synset the synset to test
 	 */
-	public static void testGloss(BabelSynset synset)
-	{
+	public static void testGloss(BabelSynset synset) {
 		BabelSynsetID id = synset.getID();
 		List<BabelGloss> glosses = synset.getGlosses();
 
 		System.out.println("GLOSSES FOR SYNSET " + synset + " -- ID: " + id);
-		for (BabelGloss gloss : glosses)
-		{
-			System.out.println(" * "+gloss.getLanguage()+" "+gloss.getSource()+" "+
-							        gloss.getSourceSense()+"\n\t"+gloss.getGloss());
+		for (BabelGloss gloss : glosses) {
+			System.out.println(" * " + gloss.getLanguage() + " " + gloss.getSource() + " " + gloss.getSourceSense()
+					+ "\n\t" + gloss.getGloss());
 		}
 		System.out.println();
 	}
@@ -221,20 +190,16 @@ public class BabelNetDemo
 	/**
 	 * A demo to see the images of a {@link BabelSynset}
 	 *
-	 * @param lemma the lemma to work on
+	 * @param lemma    the lemma to work on
 	 * @param language the lemma language
 	 */
-	public static void testImages(String lemma, Language language)
-	{
+	public static void testImages(String lemma, Language language) {
 		BabelNet bn = BabelNet.getInstance();
-		System.out.println("SYNSETS WITH word: \""+ lemma + "\"");
+		System.out.println("SYNSETS WITH word: \"" + lemma + "\"");
 		List<BabelSynset> synsets = bn.getSynsets(lemma, language);
-		for (BabelSynset synset : synsets)
-		{
-			System.out.println("  =>(" + synset.getID() + ")" +
-							 "  MAIN LEMMA: " + synset.getMainSense(language));
-			for (BabelImage img : synset.getImages())
-			{
+		for (BabelSynset synset : synsets) {
+			System.out.println("  =>(" + synset.getID() + ")" + "  MAIN LEMMA: " + synset.getMainSense(language));
+			for (BabelImage img : synset.getImages()) {
 				System.out.println("\tIMAGE URL:" + img.getURL());
 				System.out.println("\tIMAGE VALIDATED URL:" + img.getURL());
 				System.out.println("\t==");
@@ -243,24 +208,19 @@ public class BabelNetDemo
 		}
 	}
 
-	public static void mainTest()
-	{
+	public static void mainTest() {
 		BabelNet bn = BabelNet.getInstance();
 		String word = "aardvark";
-		System.out.println("SYNSETS WITH English word: \""+word+"\"");
+		System.out.println("SYNSETS WITH English word: \"" + word + "\"");
 		List<BabelSynset> synsets = bn.getSynsets(word, Language.EN);
 		Collections.sort(synsets, new BabelSynsetComparator(word));
-		for (BabelSynset synset : synsets)
-		{
-			System.out.print("  =>(" + synset.getID() + 
-							 "; TYPE: " + synset.getType() +
-							 "; WN SYNSET: " + synset.getWordNetOffsets() + ";\n" +
-							 "  MAIN LEMMA: " + synset.getMainSense(Language.EN) +
+		for (BabelSynset synset : synsets) {
+			System.out.print("  =>(" + synset.getID() + "; TYPE: " + synset.getType() + "; WN SYNSET: "
+					+ synset.getWordNetOffsets() + ";\n" + "  MAIN LEMMA: " + synset.getMainSense(Language.EN) +
 //							 ";\n  IMAGES: " + synset.getImages() +
-							 ";\n  CATEGORIES: " + synset.getCategories(Language.EN) +
-							 ";\n  SENSES: { ");
+					";\n  CATEGORIES: " + synset.getCategories(Language.EN) + ";\n  SENSES: { ");
 			for (BabelSense sense : synset.getSenses(Language.EN)) {
-				System.out.print(sense.toString()+" "+sense.getPronunciations()+" ");
+				System.out.print(sense.toString() + " " + sense.getPronunciations() + " ");
 				System.out.println();
 				System.out.print(sense.getFullLemma());
 			}
@@ -274,16 +234,14 @@ public class BabelNetDemo
 	 * @param args the demo arguments
 	 *
 	 */
-	static public void main(String[] args)
-	{
-		try
-		{
+	static public void main(String[] args) {
+		try {
 
-		   BabelNet bn = BabelNet.getInstance();
+			BabelNet bn = BabelNet.getInstance();
 
 			System.out.println("=== DEMO ===");
-			BabelSynset  synset = bn.getSynset(new BabelSynsetID("bn:03083790n"));
-			System.out.println("Welcome on "+synset.getMainSense(Language.EN).get().getFullLemma().replace("_", " "));
+			BabelSynset synset = bn.getSynset(new BabelSynsetID("bn:03083790n"));
+			System.out.println("Welcome on " + synset.getMainSense(Language.EN).get().getFullLemma().replace("_", " "));
 			System.out.println(synset.getMainGloss(Language.EN).get().getGloss());
 
 			mainTest();
@@ -315,9 +273,7 @@ public class BabelNetDemo
 //			testGloss("bn:00000010n");
 //			System.out.println("=====================DONE=====================");
 
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
